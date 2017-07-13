@@ -1,0 +1,59 @@
+{
+  "pages":[
+    "pages/index/index",     
+    "pages/robot/index", 
+
+    "pages/movie/index",  
+    "pages/Play/index",
+
+    "pages/music/index",
+    "pages/musicstore/setting",
+    "pages/musicstore/about/about",
+    "pages/musicstore/download/download",
+    "pages/musicstore/guide/guide",
+    "pages/musicstore/history/history",
+
+    "pages/map/index",
+    "pages/sets/index",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "navigationBarBackgroundColor": "#2b2e33",
+    "navigationBarTitleText": "owindow",
+    "navigationBarTextStyle":"white",
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "#dark"
+  },
+  "tabBar": {
+    "color": "#CACACA",
+    "selectedColor": "#F40",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+      "pagePath": "pages/movie/index",
+      "text": "影视",
+      "iconPath": "image/hotest.png",
+      "selectedIconPath": "image/hotest_on.png"
+    },{
+      "pagePath": "pages/music/index",
+      "text": "音乐",
+      "iconPath": "image/playing.png",
+      "selectedIconPath": "image/playing_on.png"
+    },{
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "image/icon_component.png",
+      "selectedIconPath": "image/icon_component_on.png"
+    },{
+      "pagePath": "pages/map/index",
+      "text": "地图",
+      "iconPath": "image/tab_search.png",
+      "selectedIconPath": "image/tab_search_on.png"
+    },{
+      "pagePath": "pages/sets/index",
+      "text": "设置",
+      "iconPath": "image/tabbar_setting.png",
+      "selectedIconPath": "image/tabbar_setting_on.png"
+    }]
+  }
+}

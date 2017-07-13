@@ -1,0 +1,38 @@
+/* pages/music/index.wxss */
+.container-img{
+  position:absolute;
+  right:20rpx;
+  z-index:2;
+}
+.container-imgset{
+  width:40rpx; height:40rpx;
+}
+.music-main-view{
+  width: 100%;  
+}
+
+.singer-pic{
+  width: 420rpx;
+  height:420rpx;
+}
+.view-song{
+  font-size:15px;
+  margin:20rpx 0;
+}
+.view-singer{
+  font-size:11px;
+}
+.view-cur{
+  color:#F7941D;
+  font-size:11px;
+  padding-top:20rpx;
+}
+
+.music-bottom-child{
+  text-align:center;
+  padding:16rpx 0;
+  border-bottom:1px solid #eee;
+}
+.music-section-text{
+  color:#F7941D;
+}

@@ -1,0 +1,34 @@
+<!--pages/movie/index.wxml-->
+<import src="../../common/template.wxml" />
+
+<view class="trump">
+  <view class="title">
+    {{title}}
+  </view>
+
+  <view class="PicBg">
+    <image src="{{bg}}"></image>
+  </view>
+
+  <view class="content">
+    <swiper indicator-dots="true" class="Bannerswiper"
+     bindchange="changeSwiper" data-bg="{{item.playUrl}}">
+        <block wx:for="{{trumpArr}}" wx:key="picUrl">
+          <swiper-item>
+            <view class="swiper-item">
+              <navigator url="../Play/play?name={{item.name}}">
+                <view class="itemCont">
+                  <image src="{{item.picUrl}}"></image>
+
+                  <view class="contMess">
+                    <text class="Mess1">{{item.name}}</text>
+                    <text class="Mess2">{{item.desc}}</text>
+                  </view>
+                </view>
+              </navigator>
+            </view>
+          </swiper-item>
+        </block>
+    </swiper>
+  </view>
+</view>
