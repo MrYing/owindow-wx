@@ -1,0 +1,2 @@
+/* pages/setting/about/about.wxss */
+@import "../setting.wxss";

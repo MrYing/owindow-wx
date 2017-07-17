@@ -1,0 +1,23 @@
+<!--pages/API/login/login.wxml-->
+<import src="../common/header.wxml" />
+<import src="../common/footer.wxml" />
+
+<view class="container">
+  <template is="header" data="{{title:'Login'}}"></template>
+
+  <view class="page-body">
+    <view class="page-body-wrapper">
+      <block wx:if="{{hasLogin === true}}">
+        <text class="page-body-title">已登录</text>
+        <text class="page-body-text">单个用户登录一次即可</text>
+      </block>
+      <block wx:if="{{hasLogin === false}}">
+        <text class="page-body-text">每个账号需登录一次</text>
+        <button class="page-body-button" 
+        type="primary" 
+        bindtap="login">微信登录</button>
+      </block>
+    </view>
+  </view>
+  <template is="footer"></template>
+</view>

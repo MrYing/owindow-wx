@@ -1,4 +1,5 @@
 // pages/map/index.js
+var app = getApp()
 Page({
 
   /**
@@ -12,7 +13,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this
+    wx.getLocation({
+      success: function(res) {
+        var latitude = res.latitude;
+        var longitude = res.longitude;
+        wx.openLocation({
+          latitude: latitude,
+          longitude: longitude,
+          scale:1
+        })
+      },
+    })
   },
 
   /**

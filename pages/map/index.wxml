@@ -1,2 +1,2 @@
 <!--pages/map/index.wxml-->
-<text>pages/map/index.wxml</text>
+<view class="container" id="map"></view>

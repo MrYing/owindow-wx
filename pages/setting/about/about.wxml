@@ -1,0 +1,9 @@
+<!--pages/setting/about/about.wxml-->
+<view class="container" style="padding:10px;">
+  <text style="hx-p">作者    ：Steven(Q:279115068)</text> 
+  <text style="hx-p">官网    ：www.owindow.cn</text>
+  <text style="hx-p">版本    ：V0.0.4</text> 
+
+  <image src="{{donation}}" mode="aspectFit"
+  style="width:90%;margin:0 auto;margin-top:20px;"></image>  
+</view>

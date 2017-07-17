@@ -1,0 +1,3 @@
+/* pages/setting/guide/guide.wxss */
+
+@import "../setting.wxss";

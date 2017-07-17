@@ -10,17 +10,17 @@
     </view>
 
     <view class="music-main" 
-    bindtouchstart="catchtouchstart"
-     bindtouchmove="catchtouchmove" 
-     bindtouchend="catchtouchend">
+      bindtouchstart="catchtouchstart"
+      bindtouchmove="catchtouchmove" 
+      bindtouchend="catchtouchend">
       <view class="music-main-view" >
         <view class="music-section__ctn">
           <image src="{{singerpic}}" 
-          style="transform:rotate({{singerPicRotate}}deg);"
+          style="transform:rotate({{singerPicRotate}}deg);background: url('../../image/logo_music.png') no-repeat;"
           class="singer-pic"
           mode="aspectFill"
-          binderror="loadErrorHandle"
-          bindtap="playOrPauseHandle"></image>
+          binderror="loadErrorHandler"
+          bindtap="playOrPauseHandler"></image>
         </view>
         <view class="view-song">{{songname}}</view>
         <view class="view-singer">{{singername}}</view>
@@ -36,18 +36,18 @@
       <!--for 循环 if条件  -->
       <view wx:for="{{musicTypes}}">
         <view class="music-section" 
-        bindtap="musicTypeHandle" data-index="{{index}}"
-        wx:if="{{index==selectIndex}}>
+        bindtap="musicTypeHandler" data-index="{{index}}"
+        wx:if="{{index==selectIndex}}">
           <view class="music-section__ctn">
             <image src="{{item.src}}_select.png"></image>
           </view>
           <view class="music-section__title"
-          wx:if="{{index == selectIndex}} >
+          wx:if="{{index == selectIndex}}" >
             <text class="music-section-text">{{item.title}}</text>
           </view>
         </view>
         <view class="music-section"
-        bindtap="musicTypeHandle" data-index="{{index}}" wx:else>
+        bindtap="musicTypeHandler" data-index="{{index}}" wx:else>
           <view class="music-section__ctn">
             <image src="{{item.src}}.png"></image>
           </view>
