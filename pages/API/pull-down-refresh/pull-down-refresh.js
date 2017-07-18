@@ -1,6 +1,16 @@
 // pages/API/pull-down-refresh/pull-down-refresh.js
 Page({
 
+  onPullDownRefresh: function () {
+    console.log('onPullDownRefresh', new Date())
+  },
+  stopPullDownRefresh: function () {
+    wx.stopPullDownRefresh({
+      complete: function (res) {
+        console.log(res, new Date())
+      }
+    })
+  },
   /**
    * 页面的初始数据
    */

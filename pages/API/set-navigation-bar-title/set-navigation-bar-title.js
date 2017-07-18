@@ -1,6 +1,13 @@
 // pages/API/set-navigation-bar-title/set-navigation-bar-title.js
 Page({
 
+  setNaivgationBarTitle: function (e) {
+    var title = e.detail.value.title
+    console.log(title)
+    wx.setNavigationBarTitle({
+      title: title
+    })
+  },
   /**
    * 页面的初始数据
    */

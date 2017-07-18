@@ -8,6 +8,22 @@ Page({
   
   },
 
+  navigateTo:function(){
+    wx.navigateTo({
+      url: './navigator',
+    })
+  },
+
+  navigateBack:function(){
+    wx.navigateBack()
+  },
+
+  redirectTo:function(){
+    wx.redirectTo({
+      url: './navigator',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

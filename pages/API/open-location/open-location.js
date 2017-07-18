@@ -7,6 +7,18 @@ Page({
   data: {
   
   },
+  
+  openLocation: function (e) {
+    console.log(e)
+    var value = e.detail.value
+    console.log(value)
+    wx.openLocation({
+      longitude: Number(value.longitude),
+      latitude: Number(value.latitude),
+      name: value.name,
+      address: value.address
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

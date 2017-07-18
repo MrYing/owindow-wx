@@ -8,6 +8,14 @@ Page({
   
   },
 
+  showNavigationBarLoading:function(){
+    wx.showNavigationBarLoading()
+  },
+
+  hideNavigationBarLoading:function(){
+    wx.hideNavigationBarLoading()
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
