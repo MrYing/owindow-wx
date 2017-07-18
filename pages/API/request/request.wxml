@@ -1,2 +1,15 @@
 <!--pages/API/request/request.wxml-->
-<text>pages/API/request/request.wxml</text>
+<import src="../common/header.wxml" />
+<import src="../common/footer.wxml" />
+
+<view class="container">
+  <template is="header" data="{{title:'request'}}"></template>
+
+  <view class="page-body">
+    <view class="page-body-wording">
+      <text class="page-body-text" >搭建好自己后台，提供个性化服务</text>
+    </view>
+  </view>
+
+  <template is="footer"></template>
+</view>

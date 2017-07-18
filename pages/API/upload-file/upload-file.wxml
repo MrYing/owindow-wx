@@ -1,2 +1,15 @@
 <!--pages/API/upload-file/upload-file.wxml-->
-<text>pages/API/upload-file/upload-file.wxml</text>
+<import src="../common/header.wxml" />
+<import src="../common/footer.wxml" />
+
+<view class="container">
+  <template is="header" data="{{title:'uploadFile'}}"></template>
+
+  <view class="page-body">
+    <view class="page-body-wording">
+      <text class="page-body-text">搭建好自己服务器后，将手机上图片或者视频上传到服务器</text>
+    </view>
+  </view>
+
+  <template is="footer"></template>
+</view>
