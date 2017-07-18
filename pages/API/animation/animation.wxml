@@ -21,7 +21,7 @@
             <button class="animation-button" bindtap="rotateThenScale">旋转后缩放</button>
             <button class="animation-button" bindtap="all">同时展示全部</button>
             <button class="animation-button" bindtap="allInQueue">顺序展示全部</button>
-            <button class="animation-button" bindtap="reset">还原</button>
+        <button class="animation-button-reset" bindtap="reset">还原</button>
         </view>
     </view>
   </view>
