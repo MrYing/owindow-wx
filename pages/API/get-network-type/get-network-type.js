@@ -5,9 +5,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+   hasNetworkType:false
   },
 
+  getNetworkType:function(){
+    var that = this
+    wx.getNetworkType({
+      success:function(res){
+        that.setData({
+          hasNetworkType:true,
+          networkType:res.subtype || res.networkType
+        })
+        that.update()
+      }
+    })
+  },
+
+  clear:function(){
+    this.setData({
+      hasNetworkType:false,
+      networkType:''
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

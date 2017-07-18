@@ -1,13 +1,34 @@
 // pages/API/get-location/get-location.js
+
+var formatLocation = require('./format-location.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    hasLocation:false
   },
 
+  getLocation:function(){
+    var that = this
+    wx.getLocation({
+      success:function(res){
+        console.log(res)
+        that.setData({
+          hasLocation:true,
+          location:formatLocation(res.longitude,res.latitude)
+        })
+      }
+    })
+  },
+
+  clear:function(){
+    this.setData({
+      hasLocation:false
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */

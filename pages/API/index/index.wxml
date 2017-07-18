@@ -6,17 +6,12 @@
   </view>
 
   <view class="menu-list">
-<<<<<<< HEAD
     <block wx:for="{{menuList}}" wx:for-item="menuItem">
-=======
-    <block wx:for="{{menuList}}"  wx:for-item="menuItem">
->>>>>>> origin/master
       <view class="menu-item">
         <view class="menu-item-main" id="{{index}}" bindtap="tapMenuItem">
           <text class="menu-item-name">{{menuItem.name}}</text>
 
           <image 
-<<<<<<< HEAD
           class="menu-item-arrow {{menuItem.opened?'open':'close'}}{{menuItem.url?'url':''}}" 
           src="/image/arrowright.png">
 	  </image>
@@ -26,18 +21,6 @@
           <block wx:for="{{menuItem.APIList}}" wx:for-item="APIItem">
             <navigator url="{{APIItem.url}}">
               <view class="menu-item-api-item" style="{{index === 0 ? 'border-top:none;' : ''}}">
-=======
-          class="menu-item-arrow {{menuItem.opened ? 'open':'close'}}{{menuItem.url ? 'url':''}}" 
-          src="/image/arrowright.png">
-          </image>
-         </view>
-
-         <view class="menu-item-api-list {{menuItem.opened ? 'open':'close'}}">
-          <block wx:for="{{menuItem.APIList}}" wx:for-item="APIItem">
-            <navigator url="{{APIItem.url}}">
-              <view class="menu-item-api-item-text"
-              style="{{index === 0?'border-top:none;':''}}">
->>>>>>> origin/master
                 <view class="menu-item-api-item-text">
                   <text class="menu-item-api-item-text-zhname">{{APIItem.zhName}}</text>
                   <text class="menu-item-api-item-text-enname">{{APIItem.enName}}</text>
