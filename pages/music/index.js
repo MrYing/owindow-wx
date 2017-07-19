@@ -1,298 +1,228 @@
-// pages/music/index.js
-var app = getApp();
-var util = require('../../utils/util.js');
-var intervalPic = null, loading = false, startTouchX = 0, endTouchX = 0, currentPosition = 0, currentDuration = 0;
+import api from '../../utils/api'
+
+let track = 0,page =0,np =1,songlist=''
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    hidden:true,
-    sliderVisibility:'hidden',
-    curPosition:'00:00',
-    musicTypeTitle:'频道选择',
-    singername:'未知',
-    songname:'未知',
-    singerpic:'../../image/logo_music.png',
-    songHash:'',
-    singerPicRotate:0,
-    selectIndex:0,
-    musicTypes:[
-      { type: 'calm', src: "../../image/calm", title: '平静' }
-      , { type: 'happy', src: "../../image/happy", title: '愉快' }
-      , { type: 'puzzled', src: "../../image/puzzled", title: '困惑' }
-      , { type: 'surprised', src: "../../image/surprised", title: '惊讶' }
-      , { type: 'angry', src: "../../image/angry", title: '愤怒' }
-      , { type: 'scared', src: "../../image/scared", title: '恐惧' }
-      , { type: 'sad', src: "../../image/sad", title: '悲伤' }
-      , { type: 'smiling', src: "../../image/smiling", title: '爱心' }
-    ],
-    playList:[],
-    curMusicInfo:{}
+    songRec:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    var that = this,
-      autoplay = wx.getStorageSync(app.key.isAutoPlay);
-
-    app.getLastPlayInfo(function (res) {
-      if (res.url) {
-        that.setData({ songHash: res.songHash, singername: res.singername, songname: res.songname, singerpic: res.singerpic || '../../image/logo_music.png' });
-
-        that.setData({
-          curMusicInfo: {
-            dataUrl: res.url, title: res.songname, singer: res.singername, coverImgUrl: res.singerpic || ''
-          }
-        });
-        var _type = res.type, types = that.data.musicTypes;
-        for (var i = 0, len = types.length; i < len; i++) {
-          if (types[i]['type'] == _type) { that.setData({ selectIndex: i }); break; }
-        }
-
-        if (res.status == 'play' && autoplay) { that.play(); }
-
-      }
-
-    });
-
-    //如果不自动播放 且重新进入时 先暂停其他背景音乐
-    if (!autoplay) {
-      wx.pauseBackgroundAudio();
-    }
-
-    wx.onBackgroundAudioStop(function (e) { that.playNext(); });
-    wx.onBackgroundAudioPause(function (e) {
-      that.clearRotate();
-      app.setLastPlayInfo({ status: 'pause' });
-    });
-    wx.onBackgroundAudioPlay(function (e) {
-      console.log(that.data)
-      that.setData({ sliderVisibility: 'hidden' });
-
-      that.clearRotate();
-      that.bindRotate();
-
-      //设置最后一次播放信息
-      // url: e.dataUrl
-      app.setLastPlayInfo({
-        status: 'play'
-        , 'type': that.data.musicTypes[that.data.selectIndex]['type']
-        , songHash: that.data.songHash
-        , singername: that.data.singername
-        , songname: that.data.songname
-        , url: ""
-        , singerpic: that.data.singerpic || ''
-      });
-
-      //TODO 记录播放历史【可以与lastplayinfo合并 暂不处理】
-      app.recordPlayInfo({
-        'type': that.data.musicTypes[that.data.selectIndex]['type']
-        , hash: that.data.songHash
-        , singername: that.data.singername
-        , songname: that.data.songname
-        , alum: that.data.singerpic || ''
-        , url: ""
-        , lasttime: (new Date()).getTime()			 //最后一次播放时间
-      });
-
-    });
-
+    this.getHeight();
+    this.getPlayList();
+    this.getNetInfo();
   },
-  catchtouchstart: function (e) {
-    startTouchX = e.touches[0].screenX; endTouchX = 0; currentPosition = 0;
-  }
-  , catchtouchmove: function (e) {
-    endTouchX = e.touches[0].screenX;
-    //快进控制 
-    var that = this;
 
-    if (endTouchX > 0 && startTouchX < endTouchX) {
-      wx.getBackgroundAudioPlayerState({
-        success: function (res) {
-          if (typeof res.duration == 'undefined') { return; }
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    
+  },
 
-          if (currentPosition == 0) { currentPosition = res.currentPosition; wx.pauseBackgroundAudio(); }
-          currentPosition += 1;
-          if (currentPosition > res.duration) { currentPosition = res.duration; }
-          that.setData({
-            curPosition: util.formatString('当前: {0}/总时长: {1}秒', parseInt(currentPosition), parseInt(res.duration)),
-            sliderVisibility: 'visible'
-          });
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.isPlay();
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    
+  },
+
+  getPlayList:function(){
+    api.request.hotList({
+      success:(res)=>{
+        let rec = []
+        let that = this
+        songlist = res.data.result.tracks;
+        let code = res.data.code
+        let title,author,album,album_title,song_id;
+        if(code==200){
+          let len=songlist.length
+          track = len
+          if(len>0&&len<=10){
+            page = 1
+          }else{
+            if(len%10==0) page=len/10;
+            else page=Math.floor(len/10) +1;
+          }
+          this.lineList(page,track,songlist)
         }
-      })
-    }
-  }
-  , catchtouchend: function (e) {
-    //判定为向左滑
-    if (endTouchX > 0 && endTouchX - startTouchX < 30) {
-      this.playNext();
-    }
-    // right
-    if (endTouchX > 0 && startTouchX < endTouchX) {
-      this.play(currentPosition);
-    }
-
-  }
-  , loadErrorHandler: function (e) {
-    this.setData({ singerpic: '../../image/logo_music.png' });
-  }
-  , settingHandler: function (e) {
-    wx.navigateTo({ url: '../setting/setting' });
-  }
-  , musicTypeHandler: function (e) {
-    if (loading) { return; } //加载中中 暂不允许继续
-
-    var index = parseInt(e.currentTarget.dataset.index);
-    this.setData({ selectIndex: index });
-    this.playNext();
-  }
-  , playOrPauseHandler: function () {
-    var that = this;
-    wx.getBackgroundAudioPlayerState({
-      success: function (res) {
-        if (res.status == 1) { wx.pauseBackgroundAudio(); } else
-          if (res.status == 0) { that.play(res.currentPosition); }
-      }
-    });
-  }
-  , playNext: function () {
-    var that = this, _type = that.data.musicTypes[that.data.selectIndex]['type'];
-    if (loading) { return; } loading = true;
-    that.setData({ musicTypeTitle: '歌曲切换中...' });
-    //如果网络错误导致死循环？
-    wx.request({
-      url: 'http://www.zhixingai.ren/HMusic/bdServlet',// http://118.178.85.4/HMusic/bdServlet http://127.0.0.1:8080/HMusic/bdServlet
-      data: { method: 'play', 'type': _type },
-      success: function (res) {
-        if (res.data && res.data.status == 'success') {
-          var music = res.data.data;
-
-          that.setData({ songHash: music.hash, singername: music.singername, songname: music.songname, singerpic: music.image || '../../image/logo_music.png' });
-          that.setData({ singerPicRotate: 0 });
-          that.setData({
-            curMusicInfo: {
-              dataUrl: music.url,
-              title: music.songname,
-              singer: music.singername,
-              coverImgUrl: music.image || ''
-            }
-          });
-
-          that.play(); loading = false; that.setData({ musicTypeTitle: '频道选择' });
-        } else { this.fail(); }
       },
-      fail: function () {
-        loading = false; that.playNext();
+      fail:(err)=>{
+        console.log(err)
       }
     })
+  },
 
-  }
+  lineList:function(page,track,songlist){
+    let that = this
+    let rec = []
+    let title,author,album,album_title,song_id;
 
-  //这个方法方法 自己可以随意更正更正 保证数据接口一致即可 v0.0.3 固定一个接口 以下俩将接口作废 敬请期待[已作废]
-  /*,randomMusic : function(i){
-      var that    = this;
-      var singer  = ['黑龙','westlife','许巍','崔健','伍佰','王菲','张学友','张宇'][i];
-      var page    = parseInt(Math.random()*5 + 1, 10);
-
-      wx.request({
-            url: 'http://118.178.85.4/HMusic/bdServlet',
-            data: {
-              method:'query',
-              params: singer,
-              page  : page
-            },
-            success: function(res) {
-              that.setData({ hidden: true  })
-              if(res.data && res.data.status == 'success'){
-                  that.setData({
-                    playList : res.data.data.data
-                  })
-                   
-                  that.playMusic();
-              }
-            },
-            fail : function(){
-              that.setData({ hidden: true  })
-            }
+    if(page == 1){
+      for(let i=0;i<track;i++){
+        title = songlist[i].name;
+        author = songlist[i].artists[0].name;
+        album = songlist[i].album.picUrl;
+        album_title = songlist[i].album.name;
+        song_id = songlist[i].id;
+        rec.push({
+          "title":title,
+          "author":author,
+          "album":album,
+          "album_title":album_title,
+          "song_id":song_id
         })
-  }
-  ,playMusic : function(){
-      var that    = this;
-      var playList = that.data.playList;
-      if(playList.length == 0){ 
-        var i = this.data.selectIndex;
-        i++;
-        if(i > 8){ i = 0 }
-        that.randomMusic(i); 
-        return;
       }
-      
-      var music = playList.shift();
-      wx.request({
-          url: 'http://118.178.85.4/HMusic/bdServlet',
-          data: {
-              method:'playinfo',
-              hash  : music.hash
-          },
-          success: function(res) {
-              if(res.data && res.data.status == 'success'){
-                  that.setData({ singername: music.singername, songname  : music.songname  });
-
-                  that.setData({ singerPicRotate : 0 });
-                  
-                  that.setData({
-                    curMusicInfo : {
-                      dataUrl: res.data.data.url,
-                      title  : music.songname,
-                      singer : music.singername,
-                      coverImgUrl: 'http://img2.imgtn.bdimg.com/it/u=2355890692,3670237808&fm=21&gp=0.jpg'
-                    }
-                  });
-
-                 that.play();
-                
-                 var autodown = wx.getStorageSync(app.key.isAutoDown),url = res.data.data.url;
-                 if(autodown){
-                   wx.getNetworkType({
-                    success: function(res) {
-                       // 返回网络类型2g，3g，4g，wifi
-                      if('wifi' == res.networkType){
-                          wx.downloadFile({ 
-                              url : url,success : function(res){ 
-                                wx.saveFile({ tempFilePath: res.tempFilePath,success: function(res) { var savedFilePath = res.savedFilePath  }  }) } 
-                           })
-                      }
-                    }
-                  })
-                   
-                 }
-              }else{
-                 that.playMusic();
-              }
-          }
-      })
-  },*/
-  , play: function (position) {
-    var that = this;
-    wx.playBackgroundAudio(that.data.curMusicInfo);
-    //用于控制继续播放
-    if (typeof position != 'undefined') {
-      wx.seekBackgroundAudio({ position: position })
+    }else{
+      let now = np * 10
+      for(let i=0;i<now;i++){
+        title = songlist[i].name;
+        author= songlist[i].artists[0].name;
+        album = songlist[i].album.picUrl;
+        album_title = songlist[i].album.name;
+        song_id = songlist[i].id;
+        rec.push({
+          "title":title,
+          "author":author,
+          "album":album,
+          "album_title":album_title,
+          "song_id":song_id
+        })
+      }
     }
+    that.setData({
+      songRec:rec
+    })
   },
-  clearRotate: function () {
-    if (intervalPic != null) { clearInterval(intervalPic); intervalPic = null; }
+ 
+  playSong:function(e){
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../player/player?id='+id,
+    })
+    api.wId = id
   },
-  bindRotate  : function(){
-       var that = this;
-       intervalPic = setInterval(function(){
-          if(that.data.singerPicRotate == 360){  that.setData({ singerPicRotate : 0 }); }
-          that.setData({ singerPicRotate : (that.data.singerPicRotate + 1) });
-        },50);
+
+  getNetInfo:function(){
+    api.netType({
+      success:(e)=>{
+        var type = e.networkType
+        if(type!='wifi'){
+          wx.showModal({
+            content: '您正在使用' + type + '网络。请注意流量。',
+            confirmText: '知道了',
+            confirmColor: '#D81E06',
+            showCancel: false
+          })
+        }
+      }
+    })
+  },
+
+  isPlay:function(){
+    let that = this
+    var x = 'block'
+    api.playCtrl.getState({
+      success:(e)=>{
+        let s = e.status
+        if(s == 2){x='none'}
+        else {
+          x = 'block';
+          if(api.wId !=0) this.getPlayMsg(api.wId);
+        }
+        that.setData({
+          isPlay:x
+        })
+      }
+    })
+  },
+
+  getPlayMsg:function(id){
+    let that = this
+    api.request.music({
+      data:{
+        id:id,
+        ids:[id]
+      },
+      success:(res)=>{
+        let song_info = res.data.songs[0]
+        let name = song_info.name
+        let author = song_info.artists[0].name
+        let album_small = song_info.album.picUrl
+
+        that.setData({
+          pic:album_small,
+          name:name,
+          author:author
+        })
+      }
+    })
+  },
+
+  goPlayer:function(){
+    let id = '0'
+    wx.navigateTo({
+      url: `../player/player?id=${id}`,
+    })
+  },
+
+  getHeight:function(){
+    let that = this
+    wx.getSystemInfo({
+      success:(res)=>{
+        that.setData({
+          scrollHeight:res.windowHeight
+        })
+      }
+    })
+  },
+
+  loadMore:function(){
+    if(page !=1){
+      page -=1
+      np +=1
+    }
+    this.lineList(page,track,songlist)
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    
   }
 })

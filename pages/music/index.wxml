@@ -1,60 +1,34 @@
-<!--pages/music/index.wxml-->
-<loading hidden="{{hidden}}" bindchange="loadingChange">
-  加载中。。。
-</loading>
-
-<view class="container">
-  <view bindtap="settingHandler" 
-    class="container-img">
-      <image class="container-imgset" src="../../image/setting.png"></image>
+<scroll-view scroll-y="true" scroll-top="{{scrollTop}}"
+ style="height:{{scrollHeight}}px;" bindscrolltolower="loadMore">
+  <block wx:for="{{songRec}}" wx:for-item="song"
+  wx:key="song">
+    <view class="song_list">
+      <view class="song-album">
+        <image src="{{song.album}}"></image>
+      </view>
+      <view class="song-content">
+        <view class="content">
+          <view bindtap="playSong" data-id="{{song.song_id}}">
+            <text class="song-title">{{song.title}}</text>
+          </view>
+          <view bindtap="playSong" data-id="{{song.song_id}}">
+            <text class="song-author">{{song.author}} - {{song.album_title}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="song-play" bindtap="playSong" data-id="{{song.song_id}}">
+        <image src="../../image/play.png"
+        style="width:30px;height:30px;"></image>
+      </view>
     </view>
+  </block>
+</scroll-view>
 
-    <view class="music-main" 
-      bindtouchstart="catchtouchstart"
-      bindtouchmove="catchtouchmove" 
-      bindtouchend="catchtouchend">
-      <view class="music-main-view" >
-        <view class="music-section__ctn">
-          <image src="{{singerpic}}" 
-          style="transform:rotate({{singerPicRotate}}deg);background: url('../../image/logo_music.png') no-repeat;"
-          class="singer-pic"
-          mode="aspectFill"
-          binderror="loadErrorHandler"
-          bindtap="playOrPauseHandler"></image>
-        </view>
-        <view class="view-song">{{songname}}</view>
-        <view class="view-singer">{{singername}}</view>
-        <view class="view-cur" style="visibility:{{sliderVisibility}};">{{curPosition}}</view>
-      </view>
-     </view>
-
-     <!--底部情绪选择区域  -->
-     <view class="music-bottom">
-      <view class="music-bottom-child">
-        <text class="music-type-title">{{musicTypeTitle}}</text>
-      </view>
-      <!--for 循环 if条件  -->
-      <view wx:for="{{musicTypes}}">
-        <view class="music-section" 
-        bindtap="musicTypeHandler" data-index="{{index}}"
-        wx:if="{{index==selectIndex}}">
-          <view class="music-section__ctn">
-            <image src="{{item.src}}_select.png"></image>
-          </view>
-          <view class="music-section__title"
-          wx:if="{{index == selectIndex}}" >
-            <text class="music-section-text">{{item.title}}</text>
-          </view>
-        </view>
-        <view class="music-section"
-        bindtap="musicTypeHandler" data-index="{{index}}" wx:else>
-          <view class="music-section__ctn">
-            <image src="{{item.src}}.png"></image>
-          </view>
-          <view class="music-section__title">
-            <text>{{item.title}}</text>
-          </view>
-        </view>
-      </view>
-     </view>
+<view class="backPlay" style="display:{{isPlay}}"
+bindtap="goPlayer">
+  <image src="{{pic}}"></image>
+  <view class="backPlay-msg">
+    <text>{{name}}</text>
+    <text class="author">{{author}}</text>
+  </view>
 </view>
