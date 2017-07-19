@@ -1,6 +1,6 @@
-var sourceType = [['camera'], ['album'], ['camera', 'album']]
-var camera = [['front'], ['back'], ['front', 'back']]
-var duration = Array.apply(null, { length: 60 }).map(function (n, i) {
+var sourceType = [ ['camera'], ['album'], ['camera', 'album'] ]
+var camera = [ ['front'], ['back'], ['front', 'back'] ]
+var duration = Array.apply(null, {length: 60}).map(function (n, i) {
   return i + 1
 })
 
@@ -13,7 +13,7 @@ Page({
     camera: ['前置', '后置', '前置或后置'],
 
     durationIndex: 59,
-    duration: duration.map(function (t) { return t + '秒' }),
+    duration: duration.map(function (t) { return t + '秒'}),
 
     src: ''
   },

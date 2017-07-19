@@ -1,4 +1,3 @@
-/* pages/API/canvas/canvas.wxss */
 .page-body-wrapper {
   flex-grow: 1;
 }

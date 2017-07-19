@@ -1,4 +1,3 @@
-/* pages/API/file/file.wxss */
 .image {
   width: 300rpx;
   height: 300rpx;

@@ -1,4 +1,3 @@
-/* pages/API/login/login.wxss */
 .page-body-wrapper {
   margin-top: 200rpx;
   display: flex;

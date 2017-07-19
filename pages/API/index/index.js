@@ -1,9 +1,4 @@
-// pages/API/index/index.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     menuList: [{
       name: '开放接口',
@@ -131,31 +126,29 @@ Page({
       url: '../storage/storage'
     }]
   },
-
-
-  tapMenuItem:function(e){
-    var menuItem = this.data.menuList[parseInt(e.currentTarget.id)]
-    if(menuItem.url){
-      wx.navigateTo({
-        url:menuItem.url
-      })
-    }else{
+  tapMenuItem: function (e) {
+    var menuItem = this.data.menuList[parseInt(e.currentTarget.id)] 
+    if (menuItem.url) {
+      wx.navigateTo({ url: menuItem.url })
+    } else {
       var changeData = {}
       var opened = menuItem.opened
       var index = parseInt(e.currentTarget.id)
 
-      if(opened === false){
+      // 展开操作
+      if (opened === false) {
         var openedIndex = -1
-        this.data.menuList.forEach(function(menu,i){
-          if(menu.opened === true){
+        this.data.menuList.forEach(function (menu, i) {
+          if (menu.opened === true) {
             openedIndex = i
           }
         })
-        if(openedIndex > -1){
-          changeData['menuList['+openedIndex +'].opened'] = false
+        if (openedIndex > -1) {
+          changeData['menuList[' + openedIndex + '].opened'] = false
         }
       }
-      changeData['menuList['+index+'].opened'] = !opened
+
+      changeData['menuList[' + index + '].opened'] = !opened
       this.setData(changeData)
     }
   }

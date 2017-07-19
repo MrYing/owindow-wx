@@ -1,4 +1,3 @@
-/* pages/API/animation/animation.wxss */
 .page-body-wrapper {
   flex-grow: 1;
 }

@@ -1,18 +1,15 @@
-<!--pages/API/storage/storage.wxml-->
 <import src="../common/header.wxml" />
 <import src="../common/footer.wxml" />
 
 <view class="container">
-  <template is="header" data="{{title:'get/set/clearStorage'}}"></template>
+  <template is="header" data="{{title: 'get/set/clearStorage'}}"/>
 
   <view class="page-body">
     <view class="page-body-wrapper">
       <view class="page-body-form">
-        <view class="page-body-form-item" style="border-bottom:none;">
-          <input class="page-body-form-key" type="text" placeholder="key"
-          name="key" value="{{key}}" bindinput="keyChange" />
-          <input class="page-body-form-value" type="text" placeholder="data"
-          name="data" value="{{data}}" bindinput="dataChange" />
+        <view class="page-body-form-item" style="border-bottom: none;">
+          <input class="page-body-form-key" type="text" placeholder="key" name="key" value="{{key}}" bindinput="keyChange"></input>
+          <input class="page-body-form-value" type="text" placeholder="data" name="data" value="{{data}}" bindinput="dataChange"></input>
         </view>
       </view>
       <view class="page-body-buttons">
@@ -23,8 +20,7 @@
     </view>
   </view>
 
-  <modal title="{{dialog.title}}" hidden="{{dialog.hidden}}" no-cancel 
-  bindconfirm="confirm">{{dialog.content}}</modal>
+  <modal title="{{dialog.title}}" hidden="{{dialog.hidden}}" no-cancel bindconfirm="confirm">{{dialog.content}}</modal>
 
-  <template is="footer"></template>
+  <template is="footer" />
 </view>

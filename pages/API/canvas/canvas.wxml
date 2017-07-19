@@ -1,14 +1,13 @@
-<!--pages/API/canvas/canvas.wxml-->
 <import src="../common/header.wxml" />
 <import src="../common/footer.wxml" />
 
 <view class="container">
-  <template is="header" data="{{title:'createContext'}}"></template>
+  <template is="header" data="{{title: 'createContext'}}"/>
 
   <view class="page-body">
     <view class="page-body-wrapper">
-      <canvas class="canvas-element" canvas-id="canvas" />
-      <view class="canvas-button" scroll-y="true">
+      <canvas class="canvas-element" canvas-id="canvas"></canvas>
+      <view class="canvas-buttons" scroll-y="true">
         <block wx:for="{{methods}}" wx:for-item="method">
           <button class="canvas-button" bindtap="{{method}}">{{method}}</button>
         </block>
@@ -17,5 +16,6 @@
     </view>
   </view>
 
-  <template is="footer"></template>
+  <template is="footer" />
 </view>
+

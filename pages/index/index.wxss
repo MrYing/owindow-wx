@@ -1,4 +1,12 @@
 /**index.wxss**/
+page{
+  height:100%
+}
+.container{
+  background-image: url(http://s.tc.blyoo.cn/cloud/g/i4/3a9e8c7acfb81c35.jpg);
+  background-size: 100% 100%;
+  justify-content: space-around;
+}
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -17,5 +25,5 @@
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 20px;
 }
