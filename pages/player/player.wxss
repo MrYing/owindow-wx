@@ -1,1 +1,17 @@
 /* pages/player/player.wxss */
+.container image{
+  width: 100%;
+}
+
+.audioshow{
+  margin: 30px auto;
+}
+
+.music-album{
+  width: 80%;
+  padding-bottom: 30px;
+}
+
+.music-ctrl{
+  display: none;
+}

@@ -24,7 +24,7 @@
   </block>
 </scroll-view>
 
-<view class="backPlay" style="display:{{isPlay}}"
+<view class="backPlay" style="display:{{isPlay}};"
 bindtap="goPlayer">
   <image src="{{pic}}"></image>
   <view class="backPlay-msg">

@@ -4,7 +4,7 @@
     "pages/robot/index", 
 
     "pages/movie/index",  
-    "pages/Play/index",
+    "pages/Play/play",
 
     "pages/music/index",
     "pages/player/player",
