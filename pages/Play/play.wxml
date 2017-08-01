@@ -1,5 +1,15 @@
-<view class="play">
-    <video src="http://202.197.224.44:8060/test_4.mp4" binderror=""></video>
-    <view class="videoName v">{{name}}</view>
-    <view class="videoDesc v v2">想看片,视频接口暂时没有,你懂得~</view>
+<view class="section tc">
+  <video id="myVideo" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" binderror="videoErrorCallback" danmu-list="{{danmuList}}" enable-danmu danmu-btn controls></video>
+  <view class="btn-area">
+    <input bindblur="bindInputBlur"/>
+    <button bindtap="bindSendDanmu">发送弹幕</button>
+  </view>
+</view>
+
+<view class="section tc">
+  <video src="{{src}}"   controls ></video>
+  <view class="btn-area">
+    <input bindblur="bindInputBlur"/>
+    <button bindtap="bindButtonTap">获取视频</button>
+  </view>
 </view>

@@ -1,28 +1,57 @@
+function getRandomColor() {
+  let rgb = []
+  for (let i = 0; i < 3; ++i) {
+    let color = Math.floor(Math.random() * 256).toString(16)
+    color = color.length == 1 ? '0' + color : color
+    rgb.push(color)
+  }
+  return '#' + rgb.join('')
+}
+
 Page({
-
+  onReady: function (res) {
+    this.videoContext = wx.createVideoContext('myVideo')
+  },
+  inputValue: '',
   data: {
-    name: '的视频暂时没有'
+    src: '',
+    danmuList: [
+      {
+        text: '出现的弹幕',
+        color: '#ff0000',
+        time: 1
+      },
+      {
+        text: '又出现的弹幕',
+        color: '#ff00ff',
+        time: 3
+      }
+    ]
   },
-
-  onLoad: function (params) {
-
-    let name = params.name || this.data.name;
-
-    this.setData({
-      name: name
+  bindInputBlur: function (e) {
+    this.inputValue = e.detail.value
+  },
+  bindButtonTap: function () {
+    var that = this
+    wx.chooseVideo({
+      sourceType: ['album', 'camera'],
+      maxDuration: 60,
+      camera: ['front', 'back'],
+      success: function (res) {
+        that.setData({
+          src: res.tempFilePath
+        })
+      }
     })
-
   },
-
-  onReady: function () {
-
-    wx.setNavigationBarTitle({
-      title: this.data.name
+  bindSendDanmu: function () {
+    this.videoContext.sendDanmu({
+      text: this.inputValue,
+      color: getRandomColor()
     })
-
   },
-
   videoErrorCallback: function (e) {
-    console.log(e);
+    console.log('视频错误信息:')
+    console.log(e.detail.errMsg)
   }
 })

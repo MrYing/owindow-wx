@@ -1,5 +1,5 @@
 <template name="temp">
-    <block wx:for="{{message}}">
+    <block wx:for="{{message}}" wx:key="item">
         <block wx:if="{{item.type == 1}}">
             <view class="reply">
                 <view class="pic">

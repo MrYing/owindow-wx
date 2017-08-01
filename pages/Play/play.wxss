@@ -1,16 +1,20 @@
-.play video{
+.section video{
     width:100%;
 }
-
-.v{
-    display:block;
-    width:100%;
-    text-align:center;
-    line-height:25px;
-    padding:20px 0;
+.btn-area{
+  margin: 30rpx 20rpx 50rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  background: #FFFFFF;
+  border: 1px solid #E6E6EA;
+  border-radius: 10rpx;
 }
 
-.v2{
-    color: #888;
-    font-size:12px;
+.btn-area input{
+  display: inline-block;
+  width: 80%;
+}
+.btn-area button{
+  display: inline-block;
+  width: 20%;
 }
