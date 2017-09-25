@@ -11,7 +11,7 @@
           <text class="menu-item-name">{{menuItem.name}}</text>
           <image
             class="menu-item-arrow {{menuItem.opened ? 'open' : 'close'}} {{menuItem.url ? 'url' : ''}}"
-            src="/image/arrowright.png">
+            src="/image/arrow_right.png">
           </image>
         </view>
         <view class="menu-item-api-list {{menuItem.opened ? 'open' : 'close'}}">
@@ -22,7 +22,7 @@
                   <text class="menu-item-api-item-text-zhname">{{APIItem.zhName}}</text>
                   <text class="menu-item-api-item-text-enname">{{APIItem.enName}}</text>
                 </view>
-                <image class="menu-item-api-item-arrow" src="/image/arrowright.png"></image>
+                <image class="menu-item-api-item-arrow" src="/image/arrow_right.png"></image>
               </view>
             </navigator>
           </block>
